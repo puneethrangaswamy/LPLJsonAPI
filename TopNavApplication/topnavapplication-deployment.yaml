@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: topnavapplication
+    labels:
+        app: topnavapplication
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+            app: topnavapplication
+    template:
+        metadata:
+            labels:
+                app: topnavapplication
+        spec:
+           containers:
+           - name: topnavapplication
+             image: 702216331018.dkr.ecr.us-east-1.amazonaws.com/topnavapplication:638145924543851500
+             ports:
+             - containerPort: 80
