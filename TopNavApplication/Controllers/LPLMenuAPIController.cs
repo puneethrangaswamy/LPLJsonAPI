@@ -1,16 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using TopNavApplication.Helper;
+using TopNavApplication.Model;
 using TopNavApplication.Model.response;
 
 namespace TopNavApplication.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class LPLMenuAPIController : Controller
+    public class LPLMenuAPIController : ControllerBase
     {
 
         [HttpPost]
-        public ActionResult Auth(Login login)
+        public String Auth(Login login)
         {
             Console.WriteLine("Username => " + login.username);
             Console.WriteLine("Password => " + login.password);
@@ -20,8 +25,16 @@ namespace TopNavApplication.Controllers
 
             }
 
-            return View();      
+            return "Login Successfull!!";
+        }
+
+        [HttpGet ("apps/")]
+        public async Task<ActionResult> GetAllApplications()
+        {
+            return Ok(LPLMenuDataContext.getApplication("av"));
         }
 
     }
+
+    
 }

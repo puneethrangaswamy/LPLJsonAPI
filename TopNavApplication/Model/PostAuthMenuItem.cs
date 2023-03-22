@@ -2,17 +2,17 @@
 {
     public class PostAuthMenuItem
     {
-        private int applicationMenuID { get; set; }
+        public int applicationMenuID { get; set; }
 
-        private int entitlementTypeID { get; set; }
+        public int entitlementTypeID { get; set; }
 
-        private DateTime startDate { get; set; }
+        public DateTime startDate { get; set; }
 
-        private DateTime endDate { get; set; }
+        public DateTime endDate { get; set; }
 
-        private int viewOrder { get; set; }
+        public int viewOrder { get; set; }
 
-        private int groupID { get; set; }
+        public int groupID { get; set; }
 
 
     }
