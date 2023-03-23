@@ -54,8 +54,13 @@
         public static Dictionary<Int32, Application> getApplications()
         {
             String query = sqlGetApplications;
-            NpgsqlDataReader rs = executeQuery(query);
-            Dictionary<Int32, Application> appMap = Application.CreateApplicationsFromResultSet(rs);
+            Dictionary<Int32, Application> appMap = new Dictionary<int, Application>(); ;
+            try {
+                NpgsqlDataReader rs = executeQuery(query);
+                appMap = Application.CreateApplicationsFromResultSet(rs);
+                rs.Close();
+            }
+            catch (Exception ex) { }
             closeDBConnection();
             return appMap;
 	    }
@@ -63,8 +68,15 @@
         public static Application getApplication(String appName)
         {
             String query = sqlGetApplication + "'" + appName.ToLower() + "'";
-            NpgsqlDataReader rs = executeQuery(query);
-            Application application = Application.CreateApplicationFromResultSet(rs);
+            
+            Application application = new Application();
+            try
+            {
+                NpgsqlDataReader rs = executeQuery(query);
+                application = Application.CreateApplicationFromResultSet(rs);
+                rs.Close();
+            }
+            catch (Exception ex) { }
             closeDBConnection();
             return application;
 	    }
@@ -72,8 +84,14 @@
         public static Dictionary<Int32, MenuItem> getMenuItems()
         {
             String query = sqlGetMenuItems;
-            NpgsqlDataReader rs = executeQuery(query);
-            Dictionary<Int32, MenuItem> menuItemsMap = MenuItem.CreateMenuItemFromResultSet(rs);
+            Dictionary<Int32, MenuItem> menuItemsMap = new Dictionary<int, MenuItem>();
+            try
+            {
+                NpgsqlDataReader rs = executeQuery(query);
+                menuItemsMap = MenuItem.CreateMenuItemFromResultSet(rs);
+                rs.Close();
+            }
+            catch (Exception ex) { }
             closeDBConnection();
             return menuItemsMap;
 	    }
@@ -81,23 +99,35 @@
         public static List<PreAuthMenuItem> getPreAuthMenuItems(int applicationID)
         {
             String query = sqlGetPreAuthMenuItems + applicationID;
-            NpgsqlDataReader rs = executeQuery(query);
-		    List<PreAuthMenuItem> preAuthMenuItemsList = PreAuthMenuItem.CreatePreAuthMenuItemFromResultSet(rs);
+            List<PreAuthMenuItem> preAuthMenuItemsList = new List<PreAuthMenuItem> ();
+            try
+            {
+                NpgsqlDataReader rs = executeQuery(query);
+                preAuthMenuItemsList = PreAuthMenuItem.CreatePreAuthMenuItemFromResultSet(rs);
+                rs.Close();
+            }
+            catch (Exception ex) { }
             closeDBConnection();
             return preAuthMenuItemsList;
 	    }
 
-        /*
+        
         public static List<PostAuthMenuItem> getPostAuthMenuItems(String groupName, int appID)
         {
             String query = sqlGetPostAuthMenuItems;
-            query = query.replace("GROUP_SUBSITUTE", groupName.toLowerCase());
-		    query = query.replace("APPLICATION_ID_SUBSITUTE", ""+appID);
-		    ResultSet rs = executeQuery(query);
-            List<PostAuthMenuItem> postAuthMenuItemsList = PostAuthMenuItem.CreatePostAuthMenuItemFromResultSet(rs);
+            query = query.Replace("GROUP_SUBSITUTE", groupName.ToLower());
+		    query = query.Replace("APPLICATION_ID_SUBSITUTE", ""+appID);
+            List<PostAuthMenuItem> postAuthMenuItemsList = null;
+            try
+            {
+                NpgsqlDataReader rs = executeQuery(query);
+                postAuthMenuItemsList = PostAuthMenuItem.CreatePostAuthMenuItemFromResultSet(rs);
+                rs.Close();
+            }
+            catch (Exception ex) { }
             return postAuthMenuItemsList;
 	    }
-        */
+        
 
 
         private static void createDBConnection()
@@ -105,7 +135,8 @@
             if(conn == null)
                 conn = new NpgsqlConnection("Server=127.0.0.1;User Id=postgres;Password=root;Database=lplmenu;");
 
-            conn.Open();
+            if (conn.State == System.Data.ConnectionState.Closed)
+                conn.Open();
         }
 
         private static void closeDBConnection()
