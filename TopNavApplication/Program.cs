@@ -1,4 +1,6 @@
 using Microsoft.IdentityModel.Logging;
+using Microsoft.EntityFrameworkCore;
+using TopNavApplication.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 
 app.UseHttpsRedirection();
 
