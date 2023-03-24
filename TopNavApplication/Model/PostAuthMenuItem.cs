@@ -9,7 +9,8 @@ namespace TopNavApplication.Model
     {
         public int parentMenuItemId;
         public int childMenuItemId;
-        public int viewOrder;
+        public int prtViewOrder;
+        public int chldViewOrder;
         public DateTime startDate;
         public DateTime endDate;
         public int entitlementTypeID;
@@ -37,31 +38,34 @@ namespace TopNavApplication.Model
                     mi.childMenuItemId = (Int32) rs[1];
 
                 if (rs[2] != DBNull.Value)
-                    mi.viewOrder = (Int32) rs[2];
+                    mi.prtViewOrder = (Int32) rs[2];
 
                 if (rs[3] != DBNull.Value)
-                    mi.startDate = (DateTime)rs[3];
+                    mi.chldViewOrder = (Int32)rs[3];
 
                 if (rs[4] != DBNull.Value)
-                    mi.endDate = (DateTime)rs[4];
+                    mi.startDate = (DateTime)rs[4];
 
                 if (rs[5] != DBNull.Value)
-                    mi.entitlementTypeID = (Int32) rs[5];
+                    mi.endDate = (DateTime)rs[5];
 
                 if (rs[6] != DBNull.Value)
-                    mi.entitlementName = (String) rs[6];
+                    mi.entitlementTypeID = (Int32) rs[6];
 
                 if (rs[7] != DBNull.Value)
-                    mi.entitlementDescription = (String) rs[7];
+                    mi.entitlementName = (String) rs[7];
 
                 if (rs[8] != DBNull.Value)
-                    mi.entitlementGroupID = (Int32) rs[8];
+                    mi.entitlementDescription = (String) rs[8];
 
                 if (rs[9] != DBNull.Value)
-                    mi.entitlementGroup= (String) rs[9];
+                    mi.entitlementGroupID = (Int32) rs[9];
 
                 if (rs[10] != DBNull.Value)
-                    mi.entitlementGroupDescription = (String) rs[10];
+                    mi.entitlementGroup= (String) rs[10];
+
+                if (rs[11] != DBNull.Value)
+                    mi.entitlementGroupDescription = (String) rs[11];
 
                 
 
