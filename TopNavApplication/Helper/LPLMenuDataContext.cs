@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Model;
     using Npgsql;
+    using TopNavApplication.Model.response;
     using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     public class LPLMenuDataContext
@@ -49,6 +50,12 @@
                 + "join Application_Layout al on al.id = a.layout_id where LOWER(a.Name) = ";
 
         private static String sqlGetLoginUserDetails = "SELECT * FROM USER where USERNAME = ";
+
+        private static string sqlGetRole = "select  eg.id as entitlement_group_id, eg.name as entitlement_group_name, eg.description as entitlement_group_description " +
+            "            from entitlement_group eg" +
+            "            join user_entitlement_mapping uem  on eg.id = uem.group_id" +
+            "            join   appuser au on uem.user_id = au.id " +
+            "            where (au.username = 'USERNAME' AND au.password = 'PASSWORD')";
 
 
         public static Dictionary<Int32, Application> getApplications()
@@ -111,7 +118,29 @@
             return preAuthMenuItemsList;
 	    }
 
-        
+        public static string getRoleByUserName(string userName, string password)
+        {
+            string query = sqlGetRole;
+            query = query.Replace("USERNAME", userName);
+            query = query.Replace("PASSWORD", password);
+            string role=null;
+
+            try
+            {
+                NpgsqlDataReader rs = executeQuery(query);
+                role = EntitlementGroup.GetRoleByUserName(rs);
+                rs.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+
+            return role;
+        }
+
+
         public static List<PostAuthMenuItem> getPostAuthMenuItems(String groupName, int appID)
         {
             String query = sqlGetPostAuthMenuItems;

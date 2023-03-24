@@ -11,6 +11,7 @@ using TopNavApplication.Helper;
 using TopNavApplication.Model;
 using TopNavApplication.Model.response;
 using TopNavApplication.Util;
+using System.Data;
 
 namespace TopNavApplication.ApiControllers
 {
@@ -20,7 +21,7 @@ namespace TopNavApplication.ApiControllers
     {
 
         [HttpPost(Name="post")]
-        public string Auth([FromBody]Login login)
+        public async Task<ActionResult> Auth([FromBody]Login login)
 
         {
             Console.WriteLine("Username => " + login.username);
@@ -28,55 +29,62 @@ namespace TopNavApplication.ApiControllers
 
             if (String.IsNullOrEmpty(login.username) || String.IsNullOrEmpty(login.password))
             {
-              // return BadRequest("Please provide valid credentials");
-              Console.WriteLine("Please provide valid credentials");
-                return "Please provide valid credentials";
+               return BadRequest("Please provide valid credentials");      
             }
 
             if (!login.password.Equals("password")) 
             {
-                //   return BadRequest("Please provide valid credentials");
-                Console.WriteLine("Please provide valid credentials");
-                return "Please provide valid credentials";
-
+                
+                return BadRequest("Please provide valid credentials");
+               
             }
 
             string token = TokenUtil.createToken(login);
 
-            Console.WriteLine(token);
+            //return ResponseEntity.ok("Login Success!!!");
 
-            //    response.addHeader("x-auth-token", token);
-            
-
-            //    return ResponseEntity.ok("Login Success!!!");
-
-            //  return  CreateResponse(HttpStatusCode.OK, "Item Updated Successfully");
+            string role = LPLMenuDataContext.getRoleByUserName(login.username,login.password);
 
 
-             return token;     
+        //    Dictionary<string, string> result = new Dictionary<string, string>();     
+
+            HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
+            HttpContext.Response.Headers.Add("role", role);
+            HttpContext.Response.Headers.Add("x-auth-token", token);
+
+
+            //   return Ok(JsonConvert.SerializeObject(result));
+            return Ok();
+
+
         }
 
 
         [HttpGet]
-        public string ValidateAuth(string authToken)
+        public async Task<ActionResult> ValidateAuth(string authToken)
         {
             if (String.IsNullOrEmpty(authToken)){
-                return "Please provide valid token";
+                return BadRequest("Please provide valid token");
+
             }
 
             if (!TokenUtil.validateToken(authToken))
-                return "Auth Token Expires";
+                return BadRequest("Auth Token Expires");
 
+         //   Dictionary<string, string> result = new Dictionary<string, string>();
 
             string userName = TokenUtil.getUserNameFromToken(authToken);
 
-            //    response.addHeader("x-auth-token", authToken);
+
+            HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
+            HttpContext.Response.Headers.Add("userName", userName);
+            HttpContext.Response.Headers.Add("x-auth-token", authToken);
+
 
             //    return ResponseEntity.ok("Welcome " + userName);
 
-               return userName;
-
-
+            //  return Ok(JsonConvert.SerializeObject(result));
+            return Ok();
         }
 
         [HttpGet ("preAuth/")]
