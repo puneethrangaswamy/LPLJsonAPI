@@ -5,6 +5,8 @@
         public int menuItemID;
         public String? menuItemName;
         public String? menuURL;
+        public int prtViewOrder;
+        public int chldViewOrder;
         public String? menuElementClass;
         public String? menuElementID;
         public MenuType menuType;
@@ -64,6 +66,8 @@
             respMenuItem.menuURL = dbMenuItem.menuURL != null? dbMenuItem.menuURL : "";
             respMenuItem.menuElementClass = dbMenuItem.menuElementClass != null ? dbMenuItem.menuElementClass : "";
             respMenuItem.menuElementID = dbMenuItem.menuElementID != null ? dbMenuItem.menuElementID : "";
+            respMenuItem.prtViewOrder = postAuthMItem.prtViewOrder;
+            respMenuItem.chldViewOrder = postAuthMItem.chldViewOrder;
 
             MenuType mType = new MenuType();
             mType.name = dbMenuItem.menuTypeName != null ? dbMenuItem.menuTypeName : "";

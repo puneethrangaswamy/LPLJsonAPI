@@ -33,7 +33,7 @@
                 + "where amm.APPLICATION_ID = ";
 
         private static String sqlGetPostAuthMenuItems = "select "
-                + "			amm1.PARENT_MENU_ITEM_ID as post_auth_parent_menu_item_id, amm1.CHILD_MENU_ITEM_ID as post_auth_child_menu_item_id, amm1.view_order, amm.start_date, amm.end_date, "
+                + "			amm1.PARENT_MENU_ITEM_ID as post_auth_parent_menu_item_id, amm1.CHILD_MENU_ITEM_ID as post_auth_child_menu_item_id, amm1.PARENT_VIEW_ORDER, amm1.CHILD_VIEW_ORDER, amm.start_date, amm.end_date, "
                 + "			eg.id as entitlement_group_id, eg.name as entitlement_group_name, eg.description as Entitlement_Group_Description, "
                 + "			et.id as entitlement_type_id, et.name as entitlement_name, et. description as Entitlement_Description "
                 + "			from auth_menu_mapping amm "

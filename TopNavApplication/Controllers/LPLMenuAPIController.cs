@@ -293,14 +293,18 @@ namespace TopNavApplication.ApiControllers
                         tmpMenuItem = menuMap[parentMenuItemID];
 
                         // Get Child
-                        dbCMenuItem = menuItemsMap[postAuthMenuItem.childMenuItemId];
-                        tmpCMenuItem = MenuItemResp.CreateMenuItemFromDBResponsePostAuth(dbCMenuItem, postAuthMenuItem);
-
-                        // Add child if not exist
-                        MenuItemResp CMenuItem = ApplicationUtil.IsChildMenuItemParent(tmpCMenuItem, tmpMenuItem.childMenuItems);
-                        if (null == CMenuItem)
+                        if(menuItemsMap.ContainsKey(postAuthMenuItem.childMenuItemId))
                         {
-                            tmpMenuItem.childMenuItems.Add(tmpCMenuItem);
+                            dbCMenuItem = menuItemsMap[postAuthMenuItem.childMenuItemId];
+                            if (dbCMenuItem != null)
+                            {
+                                tmpCMenuItem = MenuItemResp.CreateMenuItemFromDBResponsePostAuth(dbCMenuItem, postAuthMenuItem);
+
+                                // Add child if not exist
+                                MenuItemResp CMenuItem = ApplicationUtil.IsChildMenuItemParent(tmpCMenuItem, tmpMenuItem.childMenuItems);
+                                if (null == CMenuItem)
+                                    tmpMenuItem.childMenuItems.Add(tmpCMenuItem);
+                            }
                         }
 
                         menuMap.Remove(parentMenuItemID);
@@ -331,17 +335,19 @@ namespace TopNavApplication.ApiControllers
                                 {
                                     // Get Parent 
                                     dbPMenuItem = menuItemsMap[postAuthMenuItemHie.parentMenuItemId];
-                                    cldRootMenuItem = MenuItemResp.CreateMenuItemFromDBResponsePostAuth(dbPMenuItem, postAuthMenuItemHie);
-
-                                    // Get Child
-                                    dbCMenuItem = menuItemsMap[postAuthMenuItemHie.childMenuItemId];
-                                    cldMenuItem = MenuItemResp.CreateMenuItemFromDBResponsePostAuth(dbCMenuItem, postAuthMenuItemHie);
-
-                                    // Add child if not exist
-                                    MenuItemResp CMenuItem = ApplicationUtil.IsChildMenuItemParent(cldMenuItem, cldRootMenuItem.childMenuItems);
-                                    if (null == CMenuItem)
+                                    MenuItemResp CMenuItem = null;
+                                    if (dbCMenuItem != null)
                                     {
-                                        tmpMenuItem.childMenuItems.Add(cldMenuItem);
+                                        cldRootMenuItem = MenuItemResp.CreateMenuItemFromDBResponsePostAuth(dbPMenuItem, postAuthMenuItemHie);
+
+                                        // Get Child
+                                        dbCMenuItem = menuItemsMap[postAuthMenuItemHie.childMenuItemId];
+                                        cldMenuItem = MenuItemResp.CreateMenuItemFromDBResponsePostAuth(dbCMenuItem, postAuthMenuItemHie);
+
+                                        // Add child if not exist
+                                        CMenuItem = ApplicationUtil.IsChildMenuItemParent(cldMenuItem, cldRootMenuItem.childMenuItems);
+                                        if (null == CMenuItem)
+                                            tmpMenuItem.childMenuItems.Add(cldMenuItem);
                                     }
 
                                     // Add child parent to root if not exist
