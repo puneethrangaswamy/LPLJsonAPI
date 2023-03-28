@@ -20,7 +20,7 @@ namespace TopNavApplication.Util
         {
             Console.WriteLine(" ----- Create Token ------");
             StringBuilder tokenBuilder = new StringBuilder();
-            tokenBuilder.Append(login.username);
+            tokenBuilder.Append(login.Username);
             return generateJWT("lplauth", "lplauthissuer", tokenBuilder.ToString(), expires);
         }
 

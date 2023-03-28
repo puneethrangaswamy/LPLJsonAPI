@@ -1,0 +1,9 @@
+
+{
+    "region" : "us-east-1",
+    "profile" : "Puneeth",
+    "configuration" : "Release",
+    "image-tag"     : "topnavapplication:latest",
+    "docker-build-working-dir" : "",
+    "vstoolkit-deployment-mode" : "PushOnly"
+}

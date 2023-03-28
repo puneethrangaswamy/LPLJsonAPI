@@ -21,60 +21,41 @@ namespace TopNavApplication.ApiControllers
     {
 
         [HttpPost(Name="post")]
-        public async Task<ActionResult> Auth([FromBody]Login login)
-
+        public  Task<IActionResult> Authenticate([FromBody]Login login)
         {
-            Console.WriteLine("Username => " + login.username);
-            Console.WriteLine("Password => " + login.password);
+            Console.WriteLine("Username => " + login.Username);
+            Console.WriteLine("Password => " + login.Password);
 
-            if (String.IsNullOrEmpty(login.username) || String.IsNullOrEmpty(login.password))
+            if (string.IsNullOrEmpty(login.Username) || 
+                string.IsNullOrEmpty(login.Password) ||
+                !login.Password.Equals("password"))
             {
-               return BadRequest("Please provide valid credentials");      
-            }
-
-            if (!login.password.Equals("password")) 
-            {
-                
-                return BadRequest("Please provide valid credentials");
-               
+               return Task.FromResult((IActionResult)BadRequest("Please provide valid credentials"));      
             }
 
             string token = TokenUtil.createToken(login);
-
-            //return ResponseEntity.ok("Login Success!!!");
-
-            string role = LPLMenuDataContext.getRoleByUserName(login.username,login.password);
-
-
-        //    Dictionary<string, string> result = new Dictionary<string, string>();     
+            string role = LPLMenuDataContext.getRoleByUserName(login.Username,login.Password);
 
             HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
             HttpContext.Response.Headers.Add("role", role);
             HttpContext.Response.Headers.Add("x-auth-token", token);
 
-
-            //   return Ok(JsonConvert.SerializeObject(result));
-            return Ok();
-
-
+            return Task.FromResult((IActionResult)Ok());
         }
 
 
         [HttpGet]
-        public async Task<ActionResult> ValidateAuth(string authToken)
+        public Task<IActionResult> ValidateAuthenticationToken(string authToken)
         {
             if (String.IsNullOrEmpty(authToken)){
-                return BadRequest("Please provide valid token");
-
+                return Task.FromResult((IActionResult)BadRequest("Please provide valid token"));
             }
 
-            if (!TokenUtil.validateToken(authToken))
-                return BadRequest("Auth Token Expires");
-
-         //   Dictionary<string, string> result = new Dictionary<string, string>();
+            if (!TokenUtil.validateToken(authToken)){
+                return Task.FromResult((IActionResult)BadRequest("Auth Token Expires"));
+            }
 
             string userName = TokenUtil.getUserNameFromToken(authToken);
-
 
             HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
             HttpContext.Response.Headers.Add("userName", userName);
@@ -83,149 +64,9 @@ namespace TopNavApplication.ApiControllers
 
             //    return ResponseEntity.ok("Welcome " + userName);
 
-            //  return Ok(JsonConvert.SerializeObject(result));
-            return Ok();
+            return Task.FromResult((IActionResult)Ok());
         }
 
-        [HttpGet ("preAuth/")]
-        public async Task<ActionResult> GetPreAuth([Required] String appName)
-        {
-            PreAuthMenu preAuthMenuResponse = new PreAuthMenu();
-            Dictionary<Int32, MenuItemResp> menuMap = new Dictionary<Int32, MenuItemResp>();
-
-            try
-            {   
-                if(appName == null || appName.IsEmpty())
-                    return BadRequest("Please provide appname");
-
-                // Get Data From Database
-                Application application = LPLMenuDataContext.getApplication(appName);
-                if (null == application)
-                    return BadRequest("Looks like application is configured by this name");
-
-                Dictionary<Int32, MenuItem> menuItemsMap = LPLMenuDataContext.getMenuItems();
-                List<PreAuthMenuItem> preAuthMenuItemList = LPLMenuDataContext.getPreAuthMenuItems(application.Id);
-
-
-                List<PreAuthMenuItem> tPreAuthMenuItemList = new List<PreAuthMenuItem>();
-                tPreAuthMenuItemList.AddRange(preAuthMenuItemList);
-
-                MenuItemResp tmpMenuItem = new MenuItemResp();
-                MenuItemResp tmpCMenuItem = new MenuItemResp();
-                MenuItem dbPMenuItem = new MenuItem();
-                MenuItem dbCMenuItem = new MenuItem();
-
-                for (int i = 0; i < preAuthMenuItemList.Count(); i++)
-                {
-
-                    PreAuthMenuItem preAuthMenuItem = preAuthMenuItemList[i];
-                    int parentMenuItemID = preAuthMenuItem.parentMenuItemId;
-
-                    if (!menuMap.ContainsKey(parentMenuItemID))
-                    {
-                        // Check if it is already under any Parent
-                        List<PreAuthMenuItem> pHierarchy = ApplicationUtil.GetParentHierarchy(preAuthMenuItem, tPreAuthMenuItemList);
-
-                        // Get Parent 
-                        dbPMenuItem = menuItemsMap[parentMenuItemID];
-                        tmpMenuItem = MenuItemResp.CreateMenuItemFromDBResponse(dbPMenuItem, preAuthMenuItem);
-
-                        if (pHierarchy.IsEmpty())
-                            menuMap.Add(parentMenuItemID, tmpMenuItem);
-                    }
-                }
-
-                int counter = 0;
-                // Iterate Menu Items and get all the children
-                foreach (PreAuthMenuItem preAuthMenuItem in preAuthMenuItemList)
-                {
-                    int parentMenuItemID = preAuthMenuItem.parentMenuItemId;
-
-                    // Check if it's exist in Pre Auth Menu Map
-                    if (menuMap.ContainsKey(parentMenuItemID))
-                    {
-                        tmpMenuItem = menuMap[parentMenuItemID];
-
-                        // Get Child
-                        dbCMenuItem = menuItemsMap[preAuthMenuItem.childMenuItemId];
-                        tmpCMenuItem = MenuItemResp.CreateMenuItemFromDBResponse(dbCMenuItem, preAuthMenuItem);
-
-                        // Add child if not exist
-                        MenuItemResp CMenuItem = ApplicationUtil.IsChildMenuItemParent(tmpCMenuItem, tmpMenuItem.childMenuItems);
-                        if (null == CMenuItem)
-                            tmpMenuItem.childMenuItems.Add(tmpCMenuItem);
-
-                        menuMap.Remove(parentMenuItemID);
-                        menuMap.Add(parentMenuItemID, tmpMenuItem);
-                    }
-                    else
-                    {
-
-                        MenuItemResp rootMenuItem = new MenuItemResp();
-                        MenuItemResp cldRootMenuItem = new MenuItemResp();
-                        MenuItemResp cldMenuItem = new MenuItemResp();
-
-                        // Check if it is already under any Parent
-                        List<PreAuthMenuItem> pHierarchy = ApplicationUtil.GetParentHierarchy(preAuthMenuItem, tPreAuthMenuItemList);
-                        bool isFirst = true;
-                        if (!pHierarchy.IsEmpty())
-                        {
-                            foreach (PreAuthMenuItem preAuthMenuItemHie in pHierarchy)
-                            {
-                                if (isFirst)
-                                {
-                                    rootMenuItem = menuMap[preAuthMenuItemHie.parentMenuItemId];
-                                    if (null == rootMenuItem)
-                                        break;
-                                    isFirst = false;
-                                }
-                                else
-                                {
-                                    // Get Parent 
-                                    dbPMenuItem = menuItemsMap[preAuthMenuItemHie.parentMenuItemId];
-                                    cldRootMenuItem = MenuItemResp.CreateMenuItemFromDBResponse(dbPMenuItem, preAuthMenuItemHie);
-
-                                    // Get Child
-                                    dbCMenuItem = menuItemsMap[preAuthMenuItemHie.childMenuItemId];
-                                    cldMenuItem = MenuItemResp.CreateMenuItemFromDBResponse(dbCMenuItem, preAuthMenuItemHie);
-
-                                    // Add child if not exist
-                                    MenuItemResp CMenuItem = ApplicationUtil.IsChildMenuItemParent(cldMenuItem, cldRootMenuItem.childMenuItems);
-                                    if (null == CMenuItem)
-                                    {
-                                        tmpMenuItem.childMenuItems.Add(cldMenuItem);
-                                    }
-
-                                    // Add child parent to root if not exist
-                                    CMenuItem = ApplicationUtil.IsChildMenuItemParent(cldRootMenuItem, rootMenuItem.childMenuItems);
-                                    if (null == CMenuItem)
-                                    {
-                                        rootMenuItem.childMenuItems.Add(cldRootMenuItem);
-                                        rootMenuItem = cldRootMenuItem;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                List<MenuItemResp> mItemList = new List<MenuItemResp>();
-                foreach (var entry in menuMap)
-                    mItemList.Add(entry.Value);
-
-                preAuthMenuResponse.parentMenuItems = mItemList;
-
-
-                preAuthMenuResponse.application = application;
-                String json = JsonConvert.SerializeObject(preAuthMenuResponse);
-                return Ok(json);
-
-            } 
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
         [HttpGet("postAuth/")]
         public async Task<ActionResult> GetPostAuth([Required] String appName, [Required] String groupName)
