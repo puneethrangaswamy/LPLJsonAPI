@@ -34,12 +34,12 @@ namespace TopNavApplication.ApiControllers
             }
 
             string token = TokenUtil.createToken(login);
-            string role = LPLMenuDataContext.getRoleByUserName(login.Username,login.Password);
 
-            HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
+            string role = LPLMenuDataContext.getRoleByUserName(login.Username, login.Password);
+
             HttpContext.Response.Headers.Add("role", role);
+            HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
             HttpContext.Response.Headers.Add("x-auth-token", token);
-
             return Task.FromResult((IActionResult)Ok());
         }
 
@@ -60,9 +60,6 @@ namespace TopNavApplication.ApiControllers
             HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
             HttpContext.Response.Headers.Add("userName", userName);
             HttpContext.Response.Headers.Add("x-auth-token", authToken);
-
-
-            //    return ResponseEntity.ok("Welcome " + userName);
 
             return Task.FromResult((IActionResult)Ok());
         }

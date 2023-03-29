@@ -9,6 +9,7 @@
     using Amazon.RDS.Util;
     using Newtonsoft.Json;
     using System.Runtime.Intrinsics.X86;
+    using Microsoft.AspNetCore.Hosting.Server;
 
     public class LPLMenuDataContext
     {
@@ -134,12 +135,8 @@
                 role = EntitlementGroup.GetRoleByUserName(rs);
                 rs.Close();
             }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-
-            }
-
+            catch (Exception e) {}
+            closeDBConnection();
             return role;
         }
 
@@ -159,17 +156,6 @@
             catch (Exception ex) { }
             return postAuthMenuItemsList;
 	    }
-        
-
-
-        private static void original()
-        {
-            if(conn == null)
-                conn = new NpgsqlConnection("Server=127.0.0.1;User Id=postgres;Password=root;Database=lplmenu;");
-
-            if (conn.State == System.Data.ConnectionState.Closed)
-                conn.Open();
-        }
 
         private static void closeDBConnection()
         {
@@ -185,15 +171,10 @@
             return dr;
         }
 
-
         private static void createDBConnection()
         {
-            //; SSL Mode = Require; Root Certificate = full_path_to_ssl_certificate
-            var pwd = RDSAuthTokenGenerator.GenerateAuthToken("mfe-aurora-cluster.cluster-c5t6k5fqww9h.us-east-1.rds.amazonaws.com", 5432, "postgres");
-
             if (conn == null)
-                conn = new NpgsqlConnection($"Server=mfe-aurora-cluster.cluster-c5t6k5fqww9h.us-east-1.rds.amazonaws.com;Port=5432;User Id=postgres;password={pwd};Database=lplmenu");
-
+                conn = new NpgsqlConnection(" User ID = postgres; Password = postgres; Server = mfe-aurora-cluster.cluster-c5t6k5fqww9h.us-east-1.rds.amazonaws.com; Port = 5432; Database = lplmenu; Integrated Security = true; Pooling = true;");
             if (conn.State == System.Data.ConnectionState.Closed)
                 conn.Open();
         }

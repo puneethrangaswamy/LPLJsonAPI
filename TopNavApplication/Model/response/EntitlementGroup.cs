@@ -24,7 +24,11 @@ namespace TopNavApplication.Model.response
                     eg.description = rs[2].ToString();
 
             }
-            return eg.name;
+            if(eg != null && !string.IsNullOrEmpty(eg.name))
+            {
+                return eg.name;
+            }
+            return "";
         }
 
 
