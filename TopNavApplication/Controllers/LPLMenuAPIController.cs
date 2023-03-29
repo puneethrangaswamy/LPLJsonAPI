@@ -1,17 +1,11 @@
-﻿using AutoMapper;
-using FluentNHibernate.Conventions;
-using Microsoft.AspNetCore.Http;
+﻿using FluentNHibernate.Conventions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using TopNavApplication.Helper;
 using TopNavApplication.Model;
 using TopNavApplication.Model.response;
 using TopNavApplication.Util;
-using System.Data;
 
 namespace TopNavApplication.ApiControllers
 {
@@ -20,8 +14,9 @@ namespace TopNavApplication.ApiControllers
     public class LPLMenuAPIController : ControllerBase
     {
 
-        [HttpPost(Name="post")]
-        public  Task<IActionResult> Authenticate([FromBody]Login login)
+        [HttpPost("auth")]
+
+        public Task<IActionResult> Authenticate([FromBody]Login login)
         {
             Console.WriteLine("Username => " + login.Username);
             Console.WriteLine("Password => " + login.Password);
@@ -33,12 +28,14 @@ namespace TopNavApplication.ApiControllers
                return Task.FromResult((IActionResult)BadRequest("Please provide valid credentials"));      
             }
 
-            string token = TokenUtil.createToken(login);
+            string token = TokenUtil.CreateToken(login);
 
-            string role = LPLMenuDataContext.getRoleByUserName(login.Username, login.Password);
+            string role = LPLMenuDataContext.GetRoleByUserName(login.Username, login.Password);
 
             HttpContext.Response.Headers.Add("role", role);
-            HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers","*");
             HttpContext.Response.Headers.Add("x-auth-token", token);
             return Task.FromResult((IActionResult)Ok());
         }
@@ -51,13 +48,15 @@ namespace TopNavApplication.ApiControllers
                 return Task.FromResult((IActionResult)BadRequest("Please provide valid token"));
             }
 
-            if (!TokenUtil.validateToken(authToken)){
+            if (!TokenUtil.ValidateToken(authToken)){
                 return Task.FromResult((IActionResult)BadRequest("Auth Token Expires"));
             }
 
-            string userName = TokenUtil.getUserNameFromToken(authToken);
+            string userName = TokenUtil.GetUserNameFromToken(authToken);
 
-            HttpContext.Response.Headers.Add("access-control-expose-headers", "*");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "*"); 
             HttpContext.Response.Headers.Add("userName", userName);
             HttpContext.Response.Headers.Add("x-auth-token", authToken);
 
@@ -81,13 +80,13 @@ namespace TopNavApplication.ApiControllers
                     return BadRequest("Please provide appname");
 
                 // Get Data From Database
-                Application application = LPLMenuDataContext.getApplication(appName);
+                Application application = LPLMenuDataContext.GetApplication(appName);
                 if (null == application)
                     return BadRequest("Looks like application is configured by this name");
 
                 // Get Data From Database
-                Dictionary<Int32, MenuItem> menuItemsMap = LPLMenuDataContext.getMenuItems();
-                List<PostAuthMenuItem> postAuthMenuItemList = LPLMenuDataContext.getPostAuthMenuItems(groupName, application.Id);
+                Dictionary<Int32, MenuItem> menuItemsMap = LPLMenuDataContext.GetMenuItems();
+                List<PostAuthMenuItem> postAuthMenuItemList = LPLMenuDataContext.GetPostAuthMenuItems(groupName, application.Id);
 
 
                 List<PostAuthMenuItem> tPostAuthMenuItemList = new List<PostAuthMenuItem>();
@@ -207,9 +206,14 @@ namespace TopNavApplication.ApiControllers
                 {
                     mItemList.Add(entry.Value);
                 }
-                postAuthMenu.parentMenuItems = mItemList;
+                postAuthMenu.ParentMenuItems = mItemList;
 
-                postAuthMenu.application = application;
+                postAuthMenu.Application = application;
+
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "*");
+
                 String json = JsonConvert.SerializeObject(postAuthMenu);
                 return Ok(json);
             }

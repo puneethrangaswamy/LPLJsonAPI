@@ -8,7 +8,6 @@ namespace TopNavApplication.Util
 {
     public class TokenUtil
     {
-        private static long expires = 300000; //System.currentTimeMillis() + 1000L * 60 * 60;
 
         private static string MAGIC_KEY = "eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjIvMjUvMTk5MSAxMjowMDowMCBBTSIsIm5iZiI6MTY0MTQwNjk2MCwiZXhwIjoxNjQxNDEwNTYwLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDAwLyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMDAvIn0=";
 
@@ -16,15 +15,15 @@ namespace TopNavApplication.Util
 	
         private static  string ISSUER = "lplauthissuer";
 
-        public static string createToken(Login login)
+        public static string CreateToken(Login login)
         {
             Console.WriteLine(" ----- Create Token ------");
             StringBuilder tokenBuilder = new StringBuilder();
             tokenBuilder.Append(login.Username);
-            return generateJWT("lplauth", "lplauthissuer", tokenBuilder.ToString(), expires);
+            return GenerateJWT("lplauth", "lplauthissuer", tokenBuilder.ToString());
         }
 
-        private static string generateJWT(string id, string issuer, string subject, long ttlMillis)
+        private static string GenerateJWT(string id, string issuer, string subject)
         {
 
             DateTime now = DateTime.UtcNow;
@@ -48,7 +47,6 @@ namespace TopNavApplication.Util
         }),
                 Expires = exp,
                 Issuer = issuer,
-                //     Audience = myAudience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(apiKeySecretBytes), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -56,13 +54,13 @@ namespace TopNavApplication.Util
             return tokenHandler.WriteToken(token);
         }
 
-        public static bool validateToken(string authToken)
+        public static bool ValidateToken(string authToken)
         {
             Console.WriteLine("=== Validate Token ===");
             if (null == authToken)
                 return false;
 
-            Dictionary<string, string> authMap = verifyJWT(authToken);
+            Dictionary<string, string> authMap = VerifyJWT(authToken);
 
             if (authMap.IsNullOrEmpty())
             {
@@ -88,7 +86,7 @@ namespace TopNavApplication.Util
             return true;
         }
 
-        private static Dictionary<string, string> verifyJWT(string jwt)
+        private static Dictionary<string, string> VerifyJWT(string jwt)
         {
 
             var TokenInfo = new Dictionary<string, string>();
@@ -120,7 +118,7 @@ namespace TopNavApplication.Util
            
         }
 
-        public static string getUserNameFromToken(string authToken)
+        public static string GetUserNameFromToken(string authToken)
         {
             Console.WriteLine("----- Get Username From TOken ----");
             if (null == authToken)
@@ -128,7 +126,7 @@ namespace TopNavApplication.Util
                 return null;
             }
 
-            Dictionary<string, string> authMap = verifyJWT(authToken);
+            Dictionary<string, string> authMap = VerifyJWT(authToken);
             if (authMap.IsNullOrEmpty())
             {
                 return null;

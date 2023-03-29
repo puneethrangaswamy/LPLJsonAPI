@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using NHibernate.Cache;
-using Npgsql;
-using System.Data;
+﻿using Npgsql;
 
 namespace TopNavApplication.Model
 {
@@ -13,8 +10,8 @@ namespace TopNavApplication.Model
         public DateTime startDate;
         public DateTime endDate;
         public int entitlementTypeID;
-        public String entitlementName;
-        public String entitlementDescription;
+        public string? EntitlementName;
+        public string? EntitlementDescription;
 
         /**
          * "    amm.PARENT_MENU_ITEM_ID as pre_auth_parent_menu_item_id, amm.CHILD_MENU_ITEM_ID as pre_auth_child_menu_item_id, amm.view_order, pamm.start_date, pamm.END_DATE, "
@@ -44,8 +41,8 @@ namespace TopNavApplication.Model
 
 
 
-                mi.entitlementName = rs[6] != DBNull.Value ? (String)rs[6]: "";
-                mi.entitlementDescription = rs[6] != DBNull.Value ? (String)rs[6] : "";
+                mi.EntitlementName = rs[6] != DBNull.Value ? (String)rs[6]: "";
+                mi.EntitlementDescription = rs[6] != DBNull.Value ? (String)rs[6] : "";
 
                 
                 preAuthMenuItemsList.Add(mi);

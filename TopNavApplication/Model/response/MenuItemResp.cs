@@ -3,12 +3,12 @@
     public class MenuItemResp
     {
         public int menuItemID;
-        public String? menuItemName;
-        public String? menuURL;
+        public string? menuItemName;
+        public string? menuURL;
         public int prtViewOrder;
         public int chldViewOrder;
-        public String? menuElementClass;
-        public String? menuElementID;
+        public string? menuElementClass;
+        public string? menuElementID;
         public MenuType menuType;
         public MenuAction menuAction;
         public MenuLoadConfig menuLoadConfig;
@@ -31,28 +31,28 @@
             respMenuItem.menuElementID = dbMenuItem.menuElementID;
 
             MenuType mType = new MenuType();
-            mType.name = dbMenuItem.menuTypeName != null ? dbMenuItem.menuTypeName : "";
-            mType.description = dbMenuItem.menuTypeDescription != null ? dbMenuItem.menuTypeDescription : "";
+            mType.Name = dbMenuItem.menuTypeName != null ? dbMenuItem.menuTypeName : "";
+            mType.Description = dbMenuItem.menuTypeDescription != null ? dbMenuItem.menuTypeDescription : "";
             respMenuItem.menuType = mType;
 
             MenuAction mAction = new MenuAction();
-            mAction.name = dbMenuItem.menuActionName != null ? dbMenuItem.menuActionName : "";
-            mAction.description = dbMenuItem.menuActionDescription != null ? dbMenuItem.menuActionDescription : "";
+            mAction.Name = dbMenuItem.menuActionName != null ? dbMenuItem.menuActionName : "";
+            mAction.Description = dbMenuItem.menuActionDescription != null ? dbMenuItem.menuActionDescription : "";
             respMenuItem.menuAction = mAction;
 
             MenuLoadConfig mLoadConfig = new MenuLoadConfig();
-            mLoadConfig.name = dbMenuItem.menuLoadConfigName != null ? dbMenuItem.menuLoadConfigName : "";
-            mLoadConfig.description = dbMenuItem.menuLoadConfigDescription != null ? dbMenuItem.menuLoadConfigDescription : "";
+            mLoadConfig.Name = dbMenuItem.menuLoadConfigName != null ? dbMenuItem.menuLoadConfigName : "";
+            mLoadConfig.Description = dbMenuItem.menuLoadConfigDescription != null ? dbMenuItem.menuLoadConfigDescription : "";
             respMenuItem.menuLoadConfig = mLoadConfig;
 
             MenuLayout mLayout = new MenuLayout();
-            mLayout.name = dbMenuItem.menuLayoutName != null ? dbMenuItem.menuLayoutName : "";
-            mLayout.description = dbMenuItem.menuLayoutDescription != null ? dbMenuItem.menuLayoutDescription : "";
+            mLayout.Name = dbMenuItem.menuLayoutName != null ? dbMenuItem.menuLayoutName : "";
+            mLayout.Description = dbMenuItem.menuLayoutDescription != null ? dbMenuItem.menuLayoutDescription : "";
             respMenuItem.menuLayout =mLayout;
 
             EntitlementType mEntitlementType = new EntitlementType();
-            mEntitlementType.name = preAuthMItem.entitlementName != null? preAuthMItem.entitlementName : "";
-            mEntitlementType.description = preAuthMItem.entitlementDescription != null ? preAuthMItem.entitlementDescription : "";
+            mEntitlementType.Name = preAuthMItem.EntitlementName != null? preAuthMItem.EntitlementName : "";
+            mEntitlementType.Description = preAuthMItem.EntitlementDescription != null ? preAuthMItem.EntitlementDescription : "";
             respMenuItem.menuEntitlementType = mEntitlementType;
 
             return respMenuItem;
@@ -70,28 +70,28 @@
             respMenuItem.chldViewOrder = postAuthMItem.chldViewOrder;
 
             MenuType mType = new MenuType();
-            mType.name = dbMenuItem.menuTypeName != null ? dbMenuItem.menuTypeName : "";
-            mType.description = dbMenuItem.menuTypeDescription != null ? dbMenuItem.menuTypeDescription : "";
+            mType.Name = dbMenuItem.menuTypeName != null ? dbMenuItem.menuTypeName : "";
+            mType.Description = dbMenuItem.menuTypeDescription != null ? dbMenuItem.menuTypeDescription : "";
             respMenuItem.menuType = mType;
 
             MenuAction mAction = new MenuAction();
-            mAction.name = dbMenuItem.menuActionName != null ? dbMenuItem.menuActionName : "";
-            mAction.description = dbMenuItem.menuActionDescription != null ? dbMenuItem.menuActionDescription : "";
+            mAction.Name = dbMenuItem.menuActionName != null ? dbMenuItem.menuActionName : "";
+            mAction.Description = dbMenuItem.menuActionDescription != null ? dbMenuItem.menuActionDescription : "";
             respMenuItem.menuAction = mAction;
 
             MenuLoadConfig mLoadConfig = new MenuLoadConfig();
-            mLoadConfig.name = dbMenuItem.menuLoadConfigName != null ? dbMenuItem.menuLoadConfigName : "";
-            mLoadConfig.description = dbMenuItem.menuLoadConfigDescription != null ? dbMenuItem.menuLoadConfigDescription : "";
+            mLoadConfig.Name = dbMenuItem.menuLoadConfigName != null ? dbMenuItem.menuLoadConfigName : "";
+            mLoadConfig.Description = dbMenuItem.menuLoadConfigDescription != null ? dbMenuItem.menuLoadConfigDescription : "";
             respMenuItem.menuLoadConfig = mLoadConfig;
 
             MenuLayout mLayout = new MenuLayout();
-            mLayout.name = dbMenuItem.menuLayoutName != null ? dbMenuItem.menuLayoutName : "";
-            mLayout.description = dbMenuItem.menuLayoutDescription != null ? dbMenuItem.menuLayoutDescription : "";
+            mLayout.Name = dbMenuItem.menuLayoutName != null ? dbMenuItem.menuLayoutName : "";
+            mLayout.Description = dbMenuItem.menuLayoutDescription != null ? dbMenuItem.menuLayoutDescription : "";
             respMenuItem.menuLayout = mLayout;
 
             EntitlementType mEntitlementType = new EntitlementType();
-            mEntitlementType.name = postAuthMItem.entitlementName != null ? postAuthMItem.entitlementName : "";
-            mEntitlementType.description = postAuthMItem.entitlementDescription != null ? postAuthMItem.entitlementDescription : "";
+            mEntitlementType.Name = postAuthMItem.entitlementName != null ? postAuthMItem.entitlementName : "";
+            mEntitlementType.Description = postAuthMItem.entitlementDescription != null ? postAuthMItem.entitlementDescription : "";
             respMenuItem.menuEntitlementType = mEntitlementType;
 
             return respMenuItem;

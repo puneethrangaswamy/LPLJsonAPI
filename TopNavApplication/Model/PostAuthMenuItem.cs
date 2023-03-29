@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using NHibernate.Cache;
-using Npgsql;
-using TopNavApplication.Helper;
+﻿using Npgsql;
 
 namespace TopNavApplication.Model
 {
@@ -14,11 +11,11 @@ namespace TopNavApplication.Model
         public DateTime startDate;
         public DateTime endDate;
         public int entitlementTypeID;
-        public String entitlementName;
-        public String entitlementDescription;
+        public string? entitlementName;
+        public string? entitlementDescription;
         public int entitlementGroupID;
-        public String entitlementGroup;
-        public String entitlementGroupDescription;
+        public string? entitlementGroup;
+        public string? entitlementGroupDescription;
 
         /**
          * amm1.PARENT_MENU_ITEM_ID as post_auth_parent_menu_item_id, amm1.CHILD_MENU_ITEM_ID as post_auth_child_menu_item_id, amm1.view_order, amm.start_date, amm.end_date, "

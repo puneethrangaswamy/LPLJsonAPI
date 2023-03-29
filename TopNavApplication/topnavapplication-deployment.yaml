@@ -16,6 +16,6 @@ spec:
         spec:
            containers:
            - name: topnavapplication
-             image: 702216331018.dkr.ecr.us-east-1.amazonaws.com/topnavapplication1:638157029158705459
+             image: 702216331018.dkr.ecr.us-east-1.amazonaws.com/topnavapplication1:638157253222922211
              ports:
              - containerPort: 80

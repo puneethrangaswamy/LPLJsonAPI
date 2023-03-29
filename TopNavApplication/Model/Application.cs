@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Npgsql;
+﻿using Npgsql;
 
 namespace TopNavApplication.Model
 {
@@ -7,20 +6,20 @@ namespace TopNavApplication.Model
     {
         public int Id { get; set; }
 
-        public string? name { get; set; }
+        public string? Name { get; set; }
 
-        public string? description { get; set; }
+        public string? Description { get; set; }
 
-        public string? layoutName { get; set; }
+        public string? LayoutName { get; set; }
 
         public static Application CreateApplicationFromResultSet(NpgsqlDataReader rs)
         {
 		    while (rs.Read()) {
 			    Application application = new Application();
                 application.Id = (int) rs[0];
-			    application.name = (String) rs[1];
-			    application.layoutName = (String) rs[3];
-			    application.description = (String) rs[2];
+			    application.Name = (String) rs[1];
+			    application.LayoutName = (String) rs[3];
+			    application.Description = (String) rs[2];
 			    return application;
             }
 		    return null;
@@ -33,9 +32,9 @@ namespace TopNavApplication.Model
             {
                 Application application = new Application();
                 application.Id = (int)rs[0];
-                application.name = (String)rs[1];
-                application.layoutName = (String)rs[2];
-                application.description = (String)rs[3];
+                application.Name = (String)rs[1];
+                application.LayoutName = (String)rs[2];
+                application.Description = (String)rs[3];
                 appMap.Add(application.Id, application);
             }
             return appMap;

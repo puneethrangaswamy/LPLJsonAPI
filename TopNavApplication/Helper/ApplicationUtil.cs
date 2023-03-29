@@ -1,5 +1,4 @@
-﻿using System;
-using TopNavApplication.Model;
+﻿using TopNavApplication.Model;
 using TopNavApplication.Model.response;
 
 namespace TopNavApplication.Helper

@@ -2,7 +2,7 @@
 {
     public class MenuAction
     {
-        public String? name;
-        public String? description;
+        public string? Name { get; set; }
+        public string? Description { get; set; }
     }
 }

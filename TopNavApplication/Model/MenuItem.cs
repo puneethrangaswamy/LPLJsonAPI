@@ -1,29 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
-using Npgsql;
-using System.ComponentModel.DataAnnotations;
-using TopNavApplication.Helper;
+﻿using Npgsql;
 
 namespace TopNavApplication.Model
 {
     public class MenuItem
     {
         public int menuItemID;
-        public String menuItemName;
-        public String menuURL;
-        public String menuElementClass;
-        public String menuElementID;
+        public string? menuItemName;
+        public string? menuURL;
+        public string? menuElementClass;
+        public string? menuElementID;
         public int menuTypeID;
-        public String menuTypeName;
-        public String menuTypeDescription;
+        public string? menuTypeName;
+        public string? menuTypeDescription;
         public int menuActionID;
-        public String menuActionName;
-        public String menuActionDescription;
+        public string? menuActionName;
+        public string? menuActionDescription;
         public int menuLoadConfigID;
-        public String menuLoadConfigName;
-        public String menuLoadConfigDescription;
+        public string? menuLoadConfigName;
+        public string? menuLoadConfigDescription;
         public int menuLayoutID;
-        public String menuLayoutName;
-        public String menuLayoutDescription;
+        public string? menuLayoutName;
+        public string? menuLayoutDescription;
 
         /**
          * + "	mi.ID as menu_item_id, mi.NAME as menu_item_name, mi.url, mi.ELEMENT_CLASS, mi.ELEMENT_ID, mi.IS_DELETED, "

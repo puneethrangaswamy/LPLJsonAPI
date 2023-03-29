@@ -62,7 +62,7 @@
             "            where (au.username = 'USERNAME' AND au.password = 'PASSWORD')";
 
 
-        public static Dictionary<Int32, Application> getApplications()
+        public static Dictionary<Int32, Application> GetApplications()
         {
             String query = sqlGetApplications;
             Dictionary<Int32, Application> appMap = new Dictionary<int, Application>(); ;
@@ -76,7 +76,7 @@
             return appMap;
 	    }
 
-        public static Application getApplication(String appName)
+        public static Application GetApplication(String appName)
         {
             String query = sqlGetApplication + "'" + appName.ToLower() + "'";
             
@@ -92,7 +92,7 @@
             return application;
 	    }
 
-        public static Dictionary<Int32, MenuItem> getMenuItems()
+        public static Dictionary<Int32, MenuItem> GetMenuItems()
         {
             String query = sqlGetMenuItems;
             Dictionary<Int32, MenuItem> menuItemsMap = new Dictionary<int, MenuItem>();
@@ -107,7 +107,7 @@
             return menuItemsMap;
 	    }
 
-        public static List<PreAuthMenuItem> getPreAuthMenuItems(int applicationID)
+        public static List<PreAuthMenuItem> GetPreAuthMenuItems(int applicationID)
         {
             String query = sqlGetPreAuthMenuItems + applicationID;
             List<PreAuthMenuItem> preAuthMenuItemsList = new List<PreAuthMenuItem> ();
@@ -122,7 +122,7 @@
             return preAuthMenuItemsList;
 	    }
 
-        public static string getRoleByUserName(string userName, string password)
+        public static string GetRoleByUserName(string userName, string password)
         {
             string query = sqlGetRole;
             query = query.Replace("USERNAME", userName);
@@ -141,7 +141,7 @@
         }
 
 
-        public static List<PostAuthMenuItem> getPostAuthMenuItems(String groupName, int appID)
+        public static List<PostAuthMenuItem> GetPostAuthMenuItems(String groupName, int appID)
         {
             String query = sqlGetPostAuthMenuItems;
             query = query.Replace("GROUP_SUBSITUTE", groupName.ToLower());
@@ -165,13 +165,13 @@
 
         private static NpgsqlDataReader executeQuery(String sqlQuery)
         {
-            createDBConnection();
+            CreateDBConnection();
             NpgsqlCommand command = new NpgsqlCommand(sqlQuery, conn);
             NpgsqlDataReader dr = command.ExecuteReader();
             return dr;
         }
 
-        private static void createDBConnection()
+        private static void CreateDBConnection()
         {
             if (conn == null)
                 conn = new NpgsqlConnection(" User ID = postgres; Password = postgres; Server = mfe-aurora-cluster.cluster-c5t6k5fqww9h.us-east-1.rds.amazonaws.com; Port = 5432; Database = lplmenu; Integrated Security = true; Pooling = true;");

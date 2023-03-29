@@ -2,7 +2,7 @@
 {
     public class MenuLayout
     {
-        public String? name;
-        public String? description;
+        public string? Name;
+        public string? Description;
     }
 }

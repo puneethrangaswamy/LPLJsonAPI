@@ -2,39 +2,39 @@
 {
     public class User
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public string username { get; set; }
+        public string? Username { get; set; }
 
-        public string password { get; set; }
+        public string? Password { get; set; }
 
-        public string firstName { get; set; }
+        public string? FirstName { get; set; }
 
-        public string middleName { get; set; }
+        public string? MiddleName { get; set; }
 
-        public string lastName { get; set; }
+        public string? LastName { get; set; }
 
-        public string address1 { get; set; }
+        public string? Address1 { get; set; }
 
-        public string address2 { get; set; }
+        public string? Address2 { get; set; }
 
-        public string address3 { get; set; }
+        public string? Address3 { get; set; }
 
-        public string city { get; set; }
+        public string? City { get; set; }
 
-        public string state { get; set; }
+        public string? State { get; set; }
 
-        public string country { get; set; }
+        public string? Country { get; set; }
 
-        public string zipcode { get; set; }
+        public string? Zipcode { get; set; }
 
-        public string createdBy { get; set; }
+        public string? CreatedBy { get; set; }
 
-        public DateTime createdAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public string modifiedBy { get; set; }
+        public string? ModifiedBy { get; set; }
 
-        public DateTime modifiedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
 
     }
 }

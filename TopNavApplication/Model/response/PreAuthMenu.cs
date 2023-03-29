@@ -2,7 +2,7 @@
 {
     public class PreAuthMenu
     {
-        public Application application;
-        public List<MenuItemResp> parentMenuItems;
+        public Application Application;
+        public List<MenuItemResp> ParentMenuItems;
     }
 }
