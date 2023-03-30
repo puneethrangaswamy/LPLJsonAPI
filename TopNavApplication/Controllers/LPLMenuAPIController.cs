@@ -1,6 +1,7 @@
 ﻿using FluentNHibernate.Conventions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NHibernate.Mapping;
 using System.ComponentModel.DataAnnotations;
 using TopNavApplication.Helper;
 using TopNavApplication.Model;
@@ -30,20 +31,33 @@ namespace TopNavApplication.ApiControllers
 
             string token = TokenUtil.CreateToken(login);
 
-            string role = LPLMenuDataContext.GetRoleByUserName(login.Username, login.Password);
+            string groupName = LPLMenuDataContext.GetRoleByUserName(login.Username, login.Password);
 
-            HttpContext.Response.Headers.Add("role", role);
+            
+
+            Dictionary<string,string> keyValuePairs = new Dictionary<string,string>();
+            
+            keyValuePairs.Add("groupName", groupName);
+            keyValuePairs.Add("userName", login.Username);
+
             HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers","*");
             HttpContext.Response.Headers.Add("x-auth-token", token);
-            return Task.FromResult((IActionResult)Ok());
+
+            AuthResp authResp = new AuthResp();
+            authResp.userName = login.Username;
+            authResp.groupName = groupName;
+            String json = JsonConvert.SerializeObject(authResp);
+
+            return Task.FromResult((IActionResult)Ok(json));
         }
 
 
-        [HttpGet]
-        public Task<IActionResult> ValidateAuthenticationToken(string authToken)
+        [HttpGet("validateauth")]
+        public Task<IActionResult> ValidateAuthenticationToken()
         {
+            string authToken = HttpContext.Request.Headers["x-auth-token"];
             if (String.IsNullOrEmpty(authToken)){
                 return Task.FromResult((IActionResult)BadRequest("Please provide valid token"));
             }
@@ -60,11 +74,17 @@ namespace TopNavApplication.ApiControllers
             HttpContext.Response.Headers.Add("userName", userName);
             HttpContext.Response.Headers.Add("x-auth-token", authToken);
 
-            return Task.FromResult((IActionResult)Ok());
+            string groupName = LPLMenuDataContext.GetRoleByUserName(userName, "password");
+            AuthResp authResp = new AuthResp();
+            authResp.userName = userName;
+            authResp.groupName = groupName;
+            String json = JsonConvert.SerializeObject(authResp);
+
+            return Task.FromResult((IActionResult)Ok(json));
         }
 
 
-        [HttpGet("postAuth/")]
+        [HttpGet("postAuth")]
         public async Task<ActionResult> GetPostAuth([Required] String appName, [Required] String groupName)
         {
             PostAuthMenu postAuthMenu = new PostAuthMenu();
@@ -206,9 +226,9 @@ namespace TopNavApplication.ApiControllers
                 {
                     mItemList.Add(entry.Value);
                 }
-                postAuthMenu.ParentMenuItems = mItemList;
+                postAuthMenu.parentMenuItems = mItemList;
 
-                postAuthMenu.Application = application;
+                postAuthMenu.application = application;
 
                 HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

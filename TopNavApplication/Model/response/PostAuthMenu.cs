@@ -2,7 +2,7 @@
 {
     public class PostAuthMenu
     {
-        public Application Application;
-        public List<MenuItemResp> ParentMenuItems;
+        public Application application;
+        public List<MenuItemResp> parentMenuItems;
     }
 }

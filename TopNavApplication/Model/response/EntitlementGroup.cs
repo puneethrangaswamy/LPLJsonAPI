@@ -5,8 +5,8 @@ namespace TopNavApplication.Model.response
     public class EntitlementGroup
     {
         public int ID { get; set; }
-        public string? Name;
-        public string? Description;
+        public string? name;
+        public string? description;
 
         public static string GetRoleByUserName(NpgsqlDataReader rs)
         {
@@ -18,15 +18,15 @@ namespace TopNavApplication.Model.response
                     eg.ID = (int)rs[0];
 
                 if (rs[1] != DBNull.Value)
-                    eg.Name = rs[1].ToString();
+                    eg.name = rs[1].ToString();
 
                 if (rs[2] != DBNull.Value)
-                    eg.Description = rs[2].ToString();
+                    eg.description = rs[2].ToString();
 
             }
-            if(eg != null && !string.IsNullOrEmpty(eg.Name))
+            if(eg != null && !string.IsNullOrEmpty(eg.name))
             {
-                return eg.Name;
+                return eg.name;
             }
             return "";
         }

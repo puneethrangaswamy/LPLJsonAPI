@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -5,8 +7,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var allowedHosts = builder.Configuration.GetValue<string>("AllowedHosts").Split(";");
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-builder.Services.AddCors(options => { options.AddPolicy(MyAllowSpecificOrigins, policy => { policy.WithOrigins("http://mfeeastbucket.s3-website-us-east-1.amazonaws.com").AllowAnyHeader().AllowAnyMethod(); }); });
+builder.Services.AddCors(options => { options.AddPolicy(MyAllowSpecificOrigins, 
+    policy => { 
+        policy.WithOrigins(allowedHosts)
+        .AllowAnyHeader().AllowAnyMethod(); }); });
 
 var app = builder.Build();
 

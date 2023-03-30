@@ -135,7 +135,10 @@
                 role = EntitlementGroup.GetRoleByUserName(rs);
                 rs.Close();
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+
+                return e.Message;
+            }
             closeDBConnection();
             return role;
         }
