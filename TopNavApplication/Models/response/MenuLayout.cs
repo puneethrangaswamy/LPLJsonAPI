@@ -1,6 +1,6 @@
-﻿namespace TopNavApplication.Model.response
+﻿namespace TopNavApplication.Models.response
 {
-    public class MenuLoadConfig
+    public class MenuLayout
     {
         public string? name;
         public string? description;

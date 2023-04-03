@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace TopNavApplication.Model.response
+namespace TopNavApplication.Models.response
 {
     public class EntitlementGroup
     {
@@ -10,7 +10,7 @@ namespace TopNavApplication.Model.response
 
         public static string GetRoleByUserName(NpgsqlDataReader rs)
         {
-            EntitlementGroup eg = null;
+            EntitlementGroup? eg = null;
             while (rs.Read())
             {
                 eg = new EntitlementGroup();
@@ -24,11 +24,13 @@ namespace TopNavApplication.Model.response
                     eg.description = rs[2].ToString();
 
             }
+
             if(eg != null && !string.IsNullOrEmpty(eg.name))
             {
                 return eg.name;
             }
-            return "";
+
+            return string.Empty;
         }
 
 

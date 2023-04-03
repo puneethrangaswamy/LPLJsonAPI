@@ -1,9 +1,8 @@
-﻿namespace TopNavApplication.Model.response
+﻿namespace TopNavApplication.Models.response
 {
-    public class EntitlementType
+    public class MenuAction
     {
         public string? name { get; set; }
-
         public string? description { get; set; }
     }
 }

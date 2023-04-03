@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TopNavApplication.Model.response;
+using TopNavApplication.Models.response;
 
 namespace TopNavApplication.Util
 {
@@ -96,7 +96,7 @@ namespace TopNavApplication.Util
 
             var handler = new JwtSecurityTokenHandler();
 
-            SecurityToken validatedToken = null;
+            SecurityToken? validatedToken = null;
 
 
             var validations = new TokenValidationParameters
@@ -117,23 +117,5 @@ namespace TopNavApplication.Util
             return TokenInfo;
            
         }
-
-        public static string GetUserNameFromToken(string authToken)
-        {
-            Console.WriteLine("----- Get Username From TOken ----");
-            if (null == authToken)
-            {
-                return null;
-            }
-
-            Dictionary<string, string> authMap = VerifyJWT(authToken);
-            if (authMap.IsNullOrEmpty())
-            {
-                return null;
-            }
-
-            return authMap[ClaimTypes.Name];
-        }
-
     }
 }

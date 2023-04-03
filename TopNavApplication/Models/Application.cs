@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace TopNavApplication.Model
+namespace TopNavApplication.Models
 {
     public class Application
     {
@@ -12,7 +12,7 @@ namespace TopNavApplication.Model
 
         public string? LayoutName { get; set; }
 
-        public static Application CreateApplicationFromResultSet(NpgsqlDataReader rs)
+        public static Application? CreateApplicationFromResultSet(NpgsqlDataReader rs)
         {
 		    while (rs.Read()) {
 			    Application application = new Application();

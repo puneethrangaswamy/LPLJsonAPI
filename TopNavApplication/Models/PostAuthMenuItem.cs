@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace TopNavApplication.Model
+namespace TopNavApplication.Models
 {
     public class PostAuthMenuItem
     {
@@ -16,12 +16,6 @@ namespace TopNavApplication.Model
         public int entitlementGroupID;
         public string? entitlementGroup;
         public string? entitlementGroupDescription;
-
-        /**
-         * amm1.PARENT_MENU_ITEM_ID as post_auth_parent_menu_item_id, amm1.CHILD_MENU_ITEM_ID as post_auth_child_menu_item_id, amm1.view_order, amm.start_date, amm.end_date, "
-                + "			eg.id as entitlement_group_id, eg.name as entitlement_group_name, eg.description as Entitlement_Group_Description, "
-                + "			et.id as entitlement_type_id, et.name as entitlement_name, et. description as Entitlement_Description "
-         */
 
         public static List<PostAuthMenuItem> CreatePostAuthMenuItemFromResultSet(NpgsqlDataReader rs)
         {

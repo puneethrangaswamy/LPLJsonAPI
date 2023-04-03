@@ -1,4 +1,4 @@
-﻿namespace TopNavApplication.Model
+﻿namespace TopNavApplication.Models
 {
     public class User
     {

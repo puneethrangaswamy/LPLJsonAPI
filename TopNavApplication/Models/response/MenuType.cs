@@ -1,4 +1,4 @@
-﻿namespace TopNavApplication.Model.response
+﻿namespace TopNavApplication.Models.response
 {
     public class MenuType
     {

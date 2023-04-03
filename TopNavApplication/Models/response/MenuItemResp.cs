@@ -1,4 +1,4 @@
-﻿namespace TopNavApplication.Model.response
+﻿namespace TopNavApplication.Models.response
 {
     public class MenuItemResp
     {
@@ -9,11 +9,11 @@
         public int chldViewOrder;
         public string? menuElementClass;
         public string? menuElementID;
-        public MenuType menuType;
-        public MenuAction menuAction;
-        public MenuLoadConfig menuLoadConfig;
-        public MenuLayout menuLayout;
-        public EntitlementType menuEntitlementType;
+        public MenuType? menuType;
+        public MenuAction? menuAction;
+        public MenuLoadConfig? menuLoadConfig;
+        public MenuLayout? menuLayout;
+        public EntitlementType? menuEntitlementType;
         public List<MenuItemResp> childMenuItems;
 
         public MenuItemResp()
