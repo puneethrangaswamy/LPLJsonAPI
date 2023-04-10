@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopNavApplication", "TopNavApplication\TopNavApplication.csproj", "{0C2F07D2-F6BA-4307-B579-6108686FA634}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopNavApplication", "TopNavApplication\TopNavApplication.csproj", "{0C2F07D2-F6BA-4307-B579-6108686FA634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopNavApplication.Test", "TopNavApplication.Test\TopNavApplication.Test.csproj", "{3AB6D307-91CB-4E77-B675-DD518B7D6C74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0C2F07D2-F6BA-4307-B579-6108686FA634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C2F07D2-F6BA-4307-B579-6108686FA634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C2F07D2-F6BA-4307-B579-6108686FA634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB6D307-91CB-4E77-B675-DD518B7D6C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB6D307-91CB-4E77-B675-DD518B7D6C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB6D307-91CB-4E77-B675-DD518B7D6C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB6D307-91CB-4E77-B675-DD518B7D6C74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

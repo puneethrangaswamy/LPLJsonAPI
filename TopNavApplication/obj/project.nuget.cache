@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Etu720TtoCakV+QFAomc9ZLr3Cmf5Hz8D2klwK3/sgiNUAK5cXtH0ciRl4IOsFVBO1/QZa8xCpgzfOyy9PPe6g==",
+  "dgSpecHash": "haGJiuK6VNPtULIbBPP4+/m0PYBOD1Zq5/Op8qakdjtP5BZUPBNOFzGa6PrBU9SeT5O90huIESk0Uga0JI/rjg==",
   "success": true,
   "projectFilePath": "C:\\Users\\SunojKumar\\source\\repos\\TopNavApplication\\TopNavApplication\\TopNavApplication.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\SunojKumar\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\awssdk.core\\3.7.106.6\\awssdk.core.3.7.106.6.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\awssdk.rds\\3.7.115\\awssdk.rds.3.7.115.nupkg.sha512",
+    "C:\\Users\\SunojKumar\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\fluentnhibernate\\3.1.0\\fluentnhibernate.3.1.0.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\iesi.collections\\4.0.4\\iesi.collections.4.0.4.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",
@@ -40,6 +41,8 @@
     "C:\\Users\\SunojKumar\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.2\\microsoft.visualstudio.azure.containers.tools.targets.1.17.2.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\SunojKumar\\.nuget\\packages\\moq\\4.18.4\\moq.4.18.4.nupkg.sha512",
+    "C:\\Users\\SunojKumar\\.nuget\\packages\\mstest.testframework\\3.0.2\\mstest.testframework.3.0.2.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
@@ -78,6 +81,7 @@
     "C:\\Users\\SunojKumar\\.nuget\\packages\\system.console\\4.3.0\\system.console.4.3.0.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.0\\system.diagnostics.diagnosticsource.4.7.0.nupkg.sha512",
+    "C:\\Users\\SunojKumar\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\system.diagnostics.tools\\4.3.0\\system.diagnostics.tools.4.3.0.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\system.diagnostics.tracing\\4.3.0\\system.diagnostics.tracing.4.3.0.nupkg.sha512",
     "C:\\Users\\SunojKumar\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
