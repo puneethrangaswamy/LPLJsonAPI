@@ -48,9 +48,8 @@ namespace TopNavApplication.ApiControllers
             AuthResp authResp = new AuthResp();
             authResp.userName = login.Username;
             authResp.groupName = groupName;
-            String json = JsonConvert.SerializeObject(authResp);
 
-            return Task.FromResult((IActionResult)Ok(json));
+            return Task.FromResult((IActionResult)Ok(authResp));
         }
 
 
@@ -78,9 +77,8 @@ namespace TopNavApplication.ApiControllers
             AuthResp authResp = new AuthResp();
             authResp.userName = userName;
             authResp.groupName = groupName;
-            String json = JsonConvert.SerializeObject(authResp);
 
-            return Task.FromResult((IActionResult)Ok(json));
+            return Task.FromResult((IActionResult)Ok(authResp));
         }
 
 
@@ -234,8 +232,7 @@ namespace TopNavApplication.ApiControllers
                 HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                 HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "*");
 
-                String json = JsonConvert.SerializeObject(postAuthMenu);
-                return Ok(json);
+                return Ok(postAuthMenu);
             }
             catch (Exception ex)
             {
